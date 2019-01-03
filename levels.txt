@@ -1,0 +1,38 @@
+// This is a comment
+// All the level designs are created here. The code and puzzles are in the individual python files.
+// # - rocks
+// @ - dead vines
+// & - next level/room door
+// [empty] - ground
+
+// Level One
+###############
+#             #
+#             #
+#             #
+#             #
+#             #
+#             #
+#             #
+#             #
+#             #
+#             #
+#             #
+#             #
+###############
+
+// Level Two
+###############
+#             #
+#####   #######
+#   #  #      #
+#   #   #     #
+#    #   #    #
+#     #   #   #
+#    #   #    #
+#   #   #     #
+#  #   #      #
+#   #   #     #
+#    #   #    #
+#     #   #   #
+###############

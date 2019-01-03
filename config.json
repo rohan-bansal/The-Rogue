@@ -1,0 +1,13 @@
+{
+  "levelSettings" : 
+  {
+    "starting_level" : 1
+  },
+  "musicSettings" : 
+  {
+    "music" : true,
+    "SFX": true
+  }
+}
+
+  
