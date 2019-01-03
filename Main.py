@@ -20,9 +20,6 @@ levelIndex = {
 #   2 : LevelTwo.StageTwo()
 }
 
-save = Save_Load_Data.Save()
-save.createDataTable()
-
 parser = JsonParser.Parser()
 parser.parse("config.json")
 musicActive = parser.getMusic()
@@ -42,11 +39,10 @@ itemList = []
 
 alpha = (0, 0, 0, 0)
 
-
-charWalkCycleDown = [ss.image_at((0, 0, 30, 48), alpha), ss.image_at((35, 0, 30, 48), alpha), ss.image_at((70, 0, 30, 48), alpha)]
-charWalkCycleUp = [ss.image_at((0, 156, 30, 48), alpha), ss.image_at((35, 156, 30, 48), alpha), ss.image_at((70, 156, 30, 48), alpha)]
-charWalkCycleRight = [ss.image_at((0, 104, 30, 48), alpha), ss.image_at((35, 104, 30, 48), alpha), ss.image_at((70, 104, 30, 48), alpha)]
-charWalkCycleLeft = [ss.image_at((0, 52, 30, 48), alpha), ss.image_at((35, 52, 30, 48), alpha), ss.image_at((70, 52, 30, 48), alpha)]
+charWalkCycleDown = [ss.image_at((0, 0, 30, 48), alpha), ss.image_at((35, 0, 30, 48), alpha), ss.image_at((70, 0, 30, 48), alpha), ss.image_at((35, 0, 30, 48), alpha)]
+charWalkCycleUp = [ss.image_at((0, 156, 30, 48), alpha), ss.image_at((35, 156, 30, 48), alpha), ss.image_at((70, 156, 30, 48), alpha), ss.image_at((35, 156, 30, 48), alpha)]
+charWalkCycleRight = [ss.image_at((0, 104, 30, 48), alpha), ss.image_at((35, 104, 30, 48), alpha), ss.image_at((70, 104, 30, 48), alpha), ss.image_at((35, 104, 30, 48), alpha)]
+charWalkCycleLeft = [ss.image_at((0, 52, 30, 48), alpha), ss.image_at((35, 52, 30, 48), alpha), ss.image_at((70, 52, 30, 48), alpha), ss.image_at((35, 52, 30, 48), alpha)]
 
 currentSelected = 0
 nextAvailableSlot = 320
@@ -102,10 +98,10 @@ walkFrame = 0
 
 while(True):
 
-    if walkCycleRate != 5:
+    if walkCycleRate != 4:
         walkCycleRate += 1
     else:
-        if walkFrame != 2:
+        if walkFrame != 3:
             walkFrame += 1
         else:
             walkFrame = 0
@@ -122,7 +118,6 @@ while(True):
                 optionClicked = False
         if menu.detectPlayClick() == True:
             start()
-
 
     for item in itemList:
 
