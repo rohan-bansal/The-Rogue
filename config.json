@@ -1,4 +1,8 @@
 {
+  "fileSettings" :
+  {
+    "loadGamePath" : "Data/saved.db"
+  },
   "levelSettings" : 
   {
     "starting_level" : 1

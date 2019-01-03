@@ -11,13 +11,13 @@ class Menu():
         self.nameText = sprite("Menu/RogueTitle1.png", 150, 100, "titleText")
 
         self.playButton = sprite("Menu/playButton.png", 400, 700, "playButton")
-        self.playText = sprite("Menu/playHoverText.png", 390, 650, "playHoverText")
+        self.playText = sprite("Menu/playHoverText2.png", 300, 650, "playHoverText")
 
         self.infoIcon = sprite("Menu/infoIcon2.png", 180, 710, "InfoPageIcon")
         self.infoText = sprite("Menu/infoHoverText.png", 20, 650, "InfoPageHoverText")
 
         self.loadIcon = sprite("Menu/loadGame.png", 717, 710, "LoadGameIcon")
-        self.loadText = sprite("Menu/loadGameHoverText.png", 555, 655, "LoadGameHoverText")
+        self.loadText = sprite("Menu/loadGameHoverText2.png", 580, 655, "LoadGameHoverText")
 
         self.backButton = sprite("Menu/back.png", 20, 850, "backButton")
 
