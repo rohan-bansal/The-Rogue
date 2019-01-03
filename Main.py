@@ -5,7 +5,7 @@ import LevelOne
 import JsonParser
 import MainMenu
 import Character
-import Item
+import Weapon
 import Spritesheet
 
 import Save_Load_Data
@@ -71,7 +71,7 @@ def spawnHero():
     inventorySpawned = True
 
     heroChar = Character.Character(hero)
-    Sword = Item.Item("Sword", "Sprites/BlueHairedHero/sword.png", False, True, "Primary Weapon", 260, 905)
+    Sword = Weapon.Weapon("Sword", "Sprites/BlueHairedHero/sword.png", "Primary Weapon", 260, 905)
     Sword.assignInvSlot(1)
     heroChar.addDimensions(Sword.spriteImage.width, Sword.spriteImage.height, heroChar.availableSlot)
     heroChar.addToInventory(Sword)

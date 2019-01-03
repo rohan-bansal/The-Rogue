@@ -1,13 +1,13 @@
 import AppEngine
 from AppEngine import *
 
-class Item():
-    def __init__(self, name, image, consumable, isWeapon, desc, x, y):
+class Consumable():
+    def __init__(self, name, image, desc, x, y):
         self.name = name
         self.image = image
-        self.consumable = consumable
         self.desc = desc
-        self.isWeapon = isWeapon
+
+        self.consumable = True
 
         self.pickedUp = False
 
