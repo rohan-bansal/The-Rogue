@@ -139,7 +139,13 @@ while(True):
                 item.pickedUp = True
                 item.spriteImage.x = nextAvailableSlot
                 item.spriteImage.y = 905
-                nextAvailableSlot += 64
+                done = False
+                for x in range(len(heroChar.storage)):
+                    if done == False:
+                        if heroChar.storage[x + 1] == "":
+                            heroChar.availableSlot = x + 1
+                            nextAvailableSlot = inventorySlots[x].x
+                            done = True
 
 
     if kb.activeKeys[K_q] and heroChar.storage[currentSelected + 1] != "":
@@ -147,6 +153,7 @@ while(True):
             pass
         else:
             nextAvailableSlot = inventorySlots[currentSelected].x
+        
         if sfxActive == True:
             au.playSound("Music/Drop.ogg")
         hoverText.changeText("", black)
