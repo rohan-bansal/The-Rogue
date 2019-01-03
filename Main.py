@@ -183,16 +183,16 @@ while(True):
 
     if heroSpawned == True:
         hero.drawHealthText(hero.x - 3, hero.y - 24, 20, (HPred, HPgreen, 0), str(hero.HP))
-        if (kb.activeKeys[K_w] or kb.activeKeys[K_UP]): #and hero.edgeTop > 0:
+        if (kb.activeKeys[K_w] or kb.activeKeys[K_UP]) and hero.edgeTop > 0:
             hero.modifyImage(charWalkCycleUp[walkFrame])
             hero.y -= 4
         if (kb.activeKeys[K_s] or kb.activeKeys[K_DOWN]) and hero.edgeBottom < 896:
             hero.modifyImage(charWalkCycleDown[walkFrame])
             hero.y += 4
-        if (kb.activeKeys[K_a] or kb.activeKeys[K_LEFT]): #and hero.edgeLeft > 0:
+        if (kb.activeKeys[K_a] or kb.activeKeys[K_LEFT]) and hero.edgeLeft > 0:
             hero.modifyImage(charWalkCycleLeft[walkFrame])
             hero.x -= 4
-        if (kb.activeKeys[K_d] or kb.activeKeys[K_RIGHT]): #and hero.edgeRight < 960:
+        if (kb.activeKeys[K_d] or kb.activeKeys[K_RIGHT]) and hero.edgeRight < 960:
             hero.modifyImage(charWalkCycleRight[walkFrame])
             hero.x += 4
 

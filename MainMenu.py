@@ -5,6 +5,8 @@ class Menu():
     def __init__(self):
         self.hoverable = True
 
+        self.file_ = ""
+
         self.render()
 
     def render(self):
@@ -78,6 +80,18 @@ class Menu():
             self.hoverable = False
             self.removeWidgets()
             self.backButton.show()
+
+            try:
+                import tkinter as tk
+                from tkinter import filedialog
+
+                root = tk.Tk()
+                root.withdraw()
+                self.file_ = filedialog.askopenfile()
+            except:
+                print("Error importing file dialog. Exiting.")
+                raise ImportError
+
             return True
 
     def detectBackArrow(self):
