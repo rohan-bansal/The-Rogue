@@ -1,8 +1,11 @@
 # Coded by: Rohan Bansal, 2018
 # https://github.com/Rohan-Bansal
 
-import pygame, sys, os
-from pygame.locals import *
+import contextlib, sys, os
+
+with contextlib.redirect_stdout(None):
+    import pygame
+    from pygame.locals import *
 
 pygame.init()
 

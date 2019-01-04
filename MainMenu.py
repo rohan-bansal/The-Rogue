@@ -1,9 +1,15 @@
 import AppEngine
 from AppEngine import *
 
+import tkinter as tk
+from tkinter import filedialog
+
 class Menu():
     def __init__(self):
         self.hoverable = True
+
+        self.root = tk.Tk()
+        self.root.withdraw()
 
         self.file_ = ""
 
@@ -82,11 +88,6 @@ class Menu():
             self.backButton.show()
 
             try:
-                import tkinter as tk
-                from tkinter import filedialog
-
-                root = tk.Tk()
-                root.withdraw()
                 self.file_ = filedialog.askopenfile()
             except:
                 print("Error importing file dialog. Exiting.")
