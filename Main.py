@@ -20,12 +20,25 @@ levelIndex = {
 #   2 : LevelTwo.StageTwo()
 }
 
+ss = Spritesheet.spritesheet("Sprites/BlueHairedHero/blue_haired.png")
+alpha = (0, 0, 0, 0)
+
 parser = JsonParser.Parser()
 parser.parse("config.json")
-musicActive = parser.getMusic()
-sfxActive = parser.getSFX()
+musicActive = parser.settings['musicSettings']['music']
+sfxActive = parser.settings['musicSettings']['SFX']
+currentLevel = parser.settings['levelSettings']['starting_level']
 
-ss = Spritesheet.spritesheet("Sprites/BlueHairedHero/blue_haired.png")
+parser.parse("Sprites/BlueHairedHero/walkCycle.json")
+
+charWalkCycleDown = parser.settings['Down']
+charWalkCycleUp = parser.settings['Up']
+charWalkCycleRight = parser.settings['Right']
+charWalkCycleLeft = parser.settings['Left']
+cycles = [charWalkCycleDown, charWalkCycleLeft, charWalkCycleRight, charWalkCycleUp]
+for element in cycles:
+    for r in range(len(element)):
+        element[r] = ss.image_at(tuple(element[r]), alpha)
 
 menuActive = True
 heroSpawned = False
@@ -37,16 +50,8 @@ HPgreen = 255
 inventorySlots = []
 itemList = []
 
-alpha = (0, 0, 0, 0)
-
-charWalkCycleDown = [ss.image_at((0, 0, 30, 48), alpha), ss.image_at((35, 0, 30, 48), alpha), ss.image_at((70, 0, 30, 48), alpha), ss.image_at((35, 0, 30, 48), alpha)]
-charWalkCycleUp = [ss.image_at((0, 156, 30, 48), alpha), ss.image_at((35, 156, 30, 48), alpha), ss.image_at((70, 156, 30, 48), alpha), ss.image_at((35, 156, 30, 48), alpha)]
-charWalkCycleRight = [ss.image_at((0, 104, 30, 48), alpha), ss.image_at((35, 104, 30, 48), alpha), ss.image_at((70, 104, 30, 48), alpha), ss.image_at((35, 104, 30, 48), alpha)]
-charWalkCycleLeft = [ss.image_at((0, 52, 30, 48), alpha), ss.image_at((35, 52, 30, 48), alpha), ss.image_at((70, 52, 30, 48), alpha), ss.image_at((35, 52, 30, 48), alpha)]
-
 currentSelected = 0
 nextAvailableSlot = 320
-currentLevel = 1
 
 
 def start():
