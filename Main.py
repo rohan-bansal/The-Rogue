@@ -12,8 +12,8 @@ import Save_Load_Data
 
 import random, time, sys, os
 
-x = pygame.image.load("icon.png")
-set_window("Roguelike Adventure", x, 960, 960) # { 15, 14 (*64) [960, 896] }
+set_window("Roguelike Adventure", 960, 960) # { 15, 14 (*64) [960, 896] }
+pygame.display.set_icon(pygame.image.load("icon.png"))
 
 levelIndex = {
     1 : LevelOne.StageOne()
@@ -58,6 +58,7 @@ nextAvailableSlot = 320
 def start():
     global menuActive, itemList, obstCoords
     menuActive = False
+    inventorySlots.clear()
     for x in range(4, 11):
         inventorySlots.append(sprite("Sprites/Inventory/inventory_slot.png", x * 64, 903, "slot" + str(x)))
 
@@ -77,19 +78,26 @@ def spawnHero():
     heroSpawned = True
     inventorySpawned = True
 
-    heroChar = Character.Character(hero)
-    Sword = Weapon.Weapon("Sword", "Sprites/BlueHairedHero/sword.png", "Primary Weapon", 260, 905)
-    Sword.assignInvSlot(1)
-    heroChar.addDimensions(Sword.spriteImage.width, Sword.spriteImage.height, heroChar.availableSlot)
-    heroChar.addToInventory(Sword)
-    Sword.pickedUp = True
-    itemList.append(Sword)
+    exists = False
+
+    heroChar = Character.Character()
+    for x in range(len(heroChar.storage)):
+        if heroChar.storage[x + 1] != "":
+            if heroChar.storage[x + 1].name == "Sword":
+                exists = True
+    if exists == False:
+        Sword = Weapon.Weapon("Sword", "Sprites/BlueHairedHero/sword.png", "Primary Weapon", 260, 905)
+        Sword.assignInvSlot(1)
+        heroChar.addDimensions(Sword.spriteImage.width, Sword.spriteImage.height, heroChar.availableSlot)
+        heroChar.addToInventory(Sword)
+        Sword.pickedUp = True
+        itemList.append(Sword)
 
 
-def deleteHero(hero):
+def removeLevel(hero):
     global heroSpawned
-    del(hero)
     heroSpawned = False
+    del(hero)
 
 
 menu = MainMenu.Menu()
@@ -225,7 +233,7 @@ while(True):
 
 
         for item in levelIndex[currentLevel].obstacleTiles:
-            if item.collide(hero):
+            if item.sprite.collide(hero):
                 if hero.HP != 0:
                     hero.HP -= 1
                 if HPred != 255:

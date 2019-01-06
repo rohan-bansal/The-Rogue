@@ -1,13 +1,16 @@
 import AppEngine
 from AppEngine import *
 
+import StationaryObject as so
+import MovableObject as mo
+
 import random
+
 
 class Parser():
     def __init__(self, level):
         self.level = level
         self.lines = []
-        self.obstCoords = []
 
         self.obstDict = {
             "#" : "Sprites/Ground/rocks.png",
@@ -48,9 +51,7 @@ class Parser():
             temp = list(self.lines[y])
             for x in range(len(temp)):
                 if temp[x] == "#" or temp[x] == "@":
-                    self.obstCoords.append((x, y))
-                    obstTileList.append(sprite(self.obstDict[temp[x]], x * 64, y * 64, "obst x=%s, y=%s" % (x, y)))
-        return self.obstCoords
+                    obstTileList.append(so.StationaryObstacle(sprite(self.obstDict[temp[x]], x * 64, y * 64, "obst x=%s, y=%s" % (x, y))))
     
     def generate_levelComplete(self):
         self.checkForParse()

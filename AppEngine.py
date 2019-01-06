@@ -27,14 +27,10 @@ gameDisplay = ""
 
 clock = pygame.time.Clock()
 
-def set_window(title, icon, widthInput, heightInput):
+def set_window(title, widthInput, heightInput):
     global gameDisplay, disp_width, disp_height
 
     gameDisplay = pygame.display.set_mode((widthInput, heightInput))
-    if isinstance(icon, str):
-        pass
-    else:
-        pygame.display.set_icon(icon)
     pygame.display.set_caption(title)
     pygame.display.flip()
 

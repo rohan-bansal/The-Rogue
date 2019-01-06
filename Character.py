@@ -2,8 +2,7 @@ import AppEngine
 from AppEngine import *
 
 class Character(pygame.sprite.Sprite):
-    def __init__(self, heroSprite):
-        self.hero = heroSprite
+    def __init__(self):
         self.storage = {
             1 : "",
             2 : "",

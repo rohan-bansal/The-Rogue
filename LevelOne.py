@@ -11,7 +11,7 @@ class StageOne():
     def __init__(self):
         self.groundTiles = []
         self.obstacleTiles = []
-        self.obstacleCoords = []
+        self.hazards = []
 
         self.ss1 = Spritesheet.spritesheet("Sprites/Spritesheets/pixelArt.png")
 
@@ -24,11 +24,15 @@ class StageOne():
         self.lvl1.generate_ground(self.groundTiles)
 
     def generateObstacles(self):
-        self.obstacleCoords = self.lvl1.generate_obstacles(self.obstacleTiles)
-        return self.obstacleCoords
+        self.lvl1.generate_obstacles(self.obstacleTiles)
+
+    def destroy(self):
+        self.obstacleTiles.clear()
+        self.hazards.clear()
+        self.groundTiles.clear()
+        self.items.clear()
+        self.stopMusic()
         
-    def generateLevelComplete(self):
-        pass
 
     def spawnTreasure(self):
         self.items.append(Consumable.Consumable("Cherry Juice", self.ss1.image_at((238, 102, 32, 32), (0, 0, 0, 0)), "Food", 600, 700))
@@ -41,26 +45,24 @@ class StageOne():
     def startMusic(self):
         au.playMusic("Music/Level1.ogg", -1)
     
-    def destroyStage(self):
-        for item in self.groundTiles:
-            item.destroy()
-        for element in self.obstacleTiles:
-            element.destroy()
+    def stopMusic(self):
+        au.stopMusic()
 
     def checkCollision(self, hero):
         heroRect = hero.main.get_rect(topleft=(hero.x, hero.y))
         heroRect.inflate_ip(10, 10)
         for f in self.obstacleTiles:
-            fRect = f.main.get_rect(topleft=(f.x, f.y))
-            if fRect.colliderect(heroRect):
-                if fRect.collidepoint(heroRect.midleft):
-                    return "west"
-                if fRect.collidepoint(heroRect.midright):
-                    return "east"
-                if fRect.collidepoint(heroRect.midtop):
-                    return "north"
-                if fRect.collidepoint(heroRect.midbottom):
-                    return "south"
+            fRect = f.sprite.main.get_rect(topleft=(f.sprite.x, f.sprite.y))
+            if f.id_ == "stationary":
+                if fRect.colliderect(heroRect):
+                    if fRect.collidepoint(heroRect.midleft):
+                        return "west"
+                    if fRect.collidepoint(heroRect.midright):
+                        return "east"
+                    if fRect.collidepoint(heroRect.midtop):
+                        return "north"
+                    if fRect.collidepoint(heroRect.midbottom):
+                        return "south"
         return ""
                 
                 

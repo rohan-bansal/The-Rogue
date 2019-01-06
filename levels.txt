@@ -3,6 +3,7 @@
 // # - rocks
 // @ - dead vines
 // & - next level/room door
+// ! - movable object
 // [empty] - ground
 
 // Level One
@@ -11,11 +12,11 @@
 #             #
 #             #
 #             #
-#             #
-#             #
-#             #
-#             #
-#             #
+#       #     #
+#       #     #
+#      #      #
+#     #       #
+#     #       #
 #             #
 #             #
 #             #
