@@ -35,6 +35,7 @@ charWalkCycleDown = parser.settings['Down']
 charWalkCycleUp = parser.settings['Up']
 charWalkCycleRight = parser.settings['Right']
 charWalkCycleLeft = parser.settings['Left']
+
 cycles = [charWalkCycleDown, charWalkCycleLeft, charWalkCycleRight, charWalkCycleUp]
 for element in cycles:
     for r in range(len(element)):
@@ -55,7 +56,7 @@ nextAvailableSlot = 320
 
 
 def start():
-    global menuActive, itemList
+    global menuActive, itemList, obstCoords
     menuActive = False
     for x in range(4, 11):
         inventorySlots.append(sprite("Sprites/Inventory/inventory_slot.png", x * 64, 903, "slot" + str(x)))
@@ -69,7 +70,8 @@ def start():
 
 
 def spawnHero():
-    global hero, heroChar, heroSpawned, inventorySpawned
+    global hero, heroChar, heroBox, heroSpawned, inventorySpawned
+
     hero = sprite(charWalkCycleRight[0], 128, 453, "hero")
     hero.setHP(100)
     heroSpawned = True
@@ -101,6 +103,11 @@ optionClicked = False
 walkCycleRate = 0
 walkFrame = 0
 
+currentDirection = "west"
+tempx = 0
+tempy = 0
+cannotWalkHere = ""
+
 while(True):
 
     if walkCycleRate != 4:
@@ -123,6 +130,7 @@ while(True):
                 optionClicked = False
         if menu.detectPlayClick() == True:
             start()
+
 
     for item in itemList:
 
@@ -196,17 +204,26 @@ while(True):
     if heroSpawned == True:
         hero.drawHealthText(hero.x - 3, hero.y - 24, 20, (HPred, HPgreen, 0), str(hero.HP))
         if (kb.activeKeys[K_w] or kb.activeKeys[K_UP]) and hero.edgeTop > 0:
-            hero.modifyImage(charWalkCycleUp[walkFrame])
-            hero.y -= 4
+            currentDirection = "north"
+            if cannotWalkHere != currentDirection:
+                hero.modifyImage(charWalkCycleUp[walkFrame])
+                hero.y -= 4
         if (kb.activeKeys[K_s] or kb.activeKeys[K_DOWN]) and hero.edgeBottom < 896:
-            hero.modifyImage(charWalkCycleDown[walkFrame])
-            hero.y += 4
+            currentDirection = "south"
+            if cannotWalkHere != currentDirection:
+                hero.modifyImage(charWalkCycleDown[walkFrame])
+                hero.y += 4
         if (kb.activeKeys[K_a] or kb.activeKeys[K_LEFT]) and hero.edgeLeft > 0:
-            hero.modifyImage(charWalkCycleLeft[walkFrame])
-            hero.x -= 4
+            currentDirection = "west"
+            if cannotWalkHere != currentDirection:
+                hero.modifyImage(charWalkCycleLeft[walkFrame])
+                hero.x -= 4
         if (kb.activeKeys[K_d] or kb.activeKeys[K_RIGHT]) and hero.edgeRight < 960:
-            hero.modifyImage(charWalkCycleRight[walkFrame])
-            hero.x += 4
+            currentDirection = "east"
+            if cannotWalkHere != currentDirection:
+                hero.modifyImage(charWalkCycleRight[walkFrame])
+                hero.x += 4
+
 
         for item in levelIndex[currentLevel].obstacleTiles:
             if item.collide(hero):
@@ -218,5 +235,9 @@ while(True):
                 elif HPgreen != 0:
                     HPgreen -= 5.1
                     HPgreen = round(HPgreen)
+
+    if heroSpawned == True:
+        temp = levelIndex[currentLevel].checkCollision(hero)
+        cannotWalkHere = temp
 
     gameLoop(black)

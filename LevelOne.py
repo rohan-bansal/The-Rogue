@@ -11,7 +11,7 @@ class StageOne():
     def __init__(self):
         self.groundTiles = []
         self.obstacleTiles = []
-        self.obstacles = ["dead_vines", "rocks"]
+        self.obstacleCoords = []
 
         self.ss1 = Spritesheet.spritesheet("Sprites/Spritesheets/pixelArt.png")
 
@@ -24,7 +24,8 @@ class StageOne():
         self.lvl1.generate_ground(self.groundTiles)
 
     def generateObstacles(self):
-        self.lvl1.generate_obstacles(self.obstacleTiles)
+        self.obstacleCoords = self.lvl1.generate_obstacles(self.obstacleTiles)
+        return self.obstacleCoords
         
     def generateLevelComplete(self):
         pass
@@ -45,5 +46,24 @@ class StageOne():
             item.destroy()
         for element in self.obstacleTiles:
             element.destroy()
+
+    def checkCollision(self, hero):
+        heroRect = hero.main.get_rect(topleft=(hero.x, hero.y))
+        heroRect.inflate_ip(10, 10)
+        for f in self.obstacleTiles:
+            fRect = f.main.get_rect(topleft=(f.x, f.y))
+            if fRect.colliderect(heroRect):
+                if fRect.collidepoint(heroRect.midleft):
+                    return "west"
+                if fRect.collidepoint(heroRect.midright):
+                    return "east"
+                if fRect.collidepoint(heroRect.midtop):
+                    return "north"
+                if fRect.collidepoint(heroRect.midbottom):
+                    return "south"
+        return ""
+                
+                
+            
         
 

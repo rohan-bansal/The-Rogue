@@ -1,7 +1,7 @@
 import AppEngine
 from AppEngine import *
 
-class Character():
+class Character(pygame.sprite.Sprite):
     def __init__(self, heroSprite):
         self.hero = heroSprite
         self.storage = {
