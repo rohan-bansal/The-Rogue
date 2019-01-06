@@ -1,4 +1,4 @@
-<div style="text-align:center"><img src ="https://github.com/Rohan-Bansal/TheRogue_RPG-Adventure/blob/master/Menu/RogueTitle1.png"/></div>
+<div style="text-align:center"><img src ="https://github.com/Rohan-Bansal/TheRogue_RPG-Adventure/blob/master/Sprites/Menu/RogueTitle1.png"/></div>
 
 
 # The Roguelike Adventurer
