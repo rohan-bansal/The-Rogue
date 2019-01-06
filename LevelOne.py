@@ -1,7 +1,7 @@
 import AppEngine
 from AppEngine import *
 
-import Consumable
+import Consumable as co
 import LevelParser
 import Spritesheet
 
@@ -32,12 +32,12 @@ class StageOne():
         self.groundTiles.clear()
         self.items.clear()
         self.stopMusic()
-        
+
     def spawnTreasure(self):
-        self.items.append(Consumable.Consumable("Cherry Juice", self.ss1.image_at((238, 102, 32, 32), (0, 0, 0, 0)), "Food", 600, 700))
-        self.items.append(Consumable.Consumable("Blackberry", self.ss1.image_at((0, 0, 32, 32), (0, 0, 0, 0)), "Food", 500, 700))
-        self.items.append(Consumable.Consumable("Cherry", self.ss1.image_at((35, 0, 32, 32), (0, 0, 0, 0)), "Food", 400, 700))
-        self.items.append(Consumable.Consumable("Green Apple", self.ss1.image_at((70, 0, 32, 32), (0, 0, 0, 0)), "Food", 300, 700))
+        self.items.append(co.Consumable("Cherry Juice", self.ss1.image_at((238, 102, 32, 32), (0, 0, 0, 0)), "Food", 600, 700))
+        self.items.append(co.Consumable("Blackberry", self.ss1.image_at((0, 0, 32, 32), (0, 0, 0, 0)), "Food", 500, 700))
+        self.items.append(co.Consumable("Cherry", self.ss1.image_at((35, 0, 32, 32), (0, 0, 0, 0)), "Food", 400, 700))
+        self.items.append(co.Consumable("Green Apple", self.ss1.image_at((70, 0, 32, 32), (0, 0, 0, 0)), "Food", 300, 700))
 
         return self.items
 
