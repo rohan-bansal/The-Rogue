@@ -83,10 +83,6 @@ class Menu():
 
     def detectLoadClick(self):
         if ms.hoverSprite(self.loadIcon) and ms.spriteClicked(self.loadIcon):
-            self.hoverable = False
-            self.removeWidgets()
-            self.backButton.show()
-
             try:
                 self.file_ = filedialog.askopenfile()
             except:

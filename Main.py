@@ -12,8 +12,8 @@ import Save_Load_Data
 
 import random, time, sys, os
 
-
-set_window("Roguelike Adventure", 960, 960) # { 15, 14 (*64) [960, 896] }
+x = pygame.image.load("icon.png")
+set_window("Roguelike Adventure", x, 960, 960) # { 15, 14 (*64) [960, 896] }
 
 levelIndex = {
     1 : LevelOne.StageOne()
@@ -121,9 +121,8 @@ while(True):
 
     if menuActive == True:
         menu.detectHovers()
+        menu.detectLoadClick()
         if menu.detectInfoClick() == True:
-            optionClicked = True
-        if menu.detectLoadClick() == True:
             optionClicked = True
         if optionClicked == True:
             if menu.detectBackArrow() == True:
@@ -205,23 +204,23 @@ while(True):
         hero.drawHealthText(hero.x - 3, hero.y - 24, 20, (HPred, HPgreen, 0), str(hero.HP))
         if (kb.activeKeys[K_w] or kb.activeKeys[K_UP]) and hero.edgeTop > 0:
             currentDirection = "north"
+            hero.modifyImage(charWalkCycleUp[walkFrame])            
             if cannotWalkHere != currentDirection:
-                hero.modifyImage(charWalkCycleUp[walkFrame])
                 hero.y -= 4
         if (kb.activeKeys[K_s] or kb.activeKeys[K_DOWN]) and hero.edgeBottom < 896:
             currentDirection = "south"
+            hero.modifyImage(charWalkCycleDown[walkFrame])
             if cannotWalkHere != currentDirection:
-                hero.modifyImage(charWalkCycleDown[walkFrame])
                 hero.y += 4
         if (kb.activeKeys[K_a] or kb.activeKeys[K_LEFT]) and hero.edgeLeft > 0:
             currentDirection = "west"
+            hero.modifyImage(charWalkCycleLeft[walkFrame])
             if cannotWalkHere != currentDirection:
-                hero.modifyImage(charWalkCycleLeft[walkFrame])
                 hero.x -= 4
         if (kb.activeKeys[K_d] or kb.activeKeys[K_RIGHT]) and hero.edgeRight < 960:
             currentDirection = "east"
+            hero.modifyImage(charWalkCycleRight[walkFrame])
             if cannotWalkHere != currentDirection:
-                hero.modifyImage(charWalkCycleRight[walkFrame])
                 hero.x += 4
 
 
