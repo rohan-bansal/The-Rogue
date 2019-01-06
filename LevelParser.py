@@ -21,7 +21,7 @@ class Parser():
         self.hasParsed = False
 
     def parse(self):
-        with open("levels.txt", "r") as f:
+        with open("GameConfig/levels.txt", "r") as f:
             self.lines = f.read().splitlines()
 
         self.lines = self.lines[self.lines.index("// %s" % self.level):]

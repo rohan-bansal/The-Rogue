@@ -33,7 +33,6 @@ class StageOne():
         self.items.clear()
         self.stopMusic()
         
-
     def spawnTreasure(self):
         self.items.append(Consumable.Consumable("Cherry Juice", self.ss1.image_at((238, 102, 32, 32), (0, 0, 0, 0)), "Food", 600, 700))
         self.items.append(Consumable.Consumable("Blackberry", self.ss1.image_at((0, 0, 32, 32), (0, 0, 0, 0)), "Food", 500, 700))

@@ -8,9 +8,8 @@ import Character
 import Weapon
 import Spritesheet
 
-import Save_Load_Data
-
 import random, time, sys, os
+
 
 set_window("Roguelike Adventure", 960, 960) # { 15, 14 (*64) [960, 896] }
 pygame.display.set_icon(pygame.image.load("icon.png"))
@@ -24,7 +23,7 @@ ss = Spritesheet.spritesheet("Sprites/BlueHairedHero/blue_haired.png")
 alpha = (0, 0, 0, 0)
 
 parser = JsonParser.Parser()
-parser.parse("config.json")
+parser.parse("GameConfig/config.json")
 musicActive = parser.settings['musicSettings']['music']
 sfxActive = parser.settings['musicSettings']['SFX']
 currentLevel = parser.settings['levelSettings']['starting_level']

@@ -16,20 +16,20 @@ class Menu():
         self.render()
 
     def render(self):
-        self.nameText = sprite("Menu/RogueTitle1.png", 150, 100, "titleText")
+        self.nameText = sprite("Sprites/Menu/RogueTitle1.png", 150, 100, "titleText")
 
-        self.playButton = sprite("Menu/playButton.png", 400, 700, "playButton")
-        self.playText = sprite("Menu/playHoverText2.png", 300, 650, "playHoverText")
+        self.playButton = sprite("Sprites/Menu/playButton.png", 400, 700, "playButton")
+        self.playText = sprite("Sprites/Menu/playHoverText2.png", 300, 650, "playHoverText")
 
-        self.infoIcon = sprite("Menu/infoIcon2.png", 180, 710, "InfoPageIcon")
-        self.infoText = sprite("Menu/infoHoverText.png", 20, 650, "InfoPageHoverText")
+        self.infoIcon = sprite("Sprites/Menu/infoIcon2.png", 180, 710, "InfoPageIcon")
+        self.infoText = sprite("Sprites/Menu/infoHoverText.png", 20, 650, "InfoPageHoverText")
 
-        self.loadIcon = sprite("Menu/loadGame.png", 717, 710, "LoadGameIcon")
-        self.loadText = sprite("Menu/loadGameHoverText2.png", 580, 655, "LoadGameHoverText")
+        self.loadIcon = sprite("Sprites/Menu/loadGame.png", 717, 710, "LoadGameIcon")
+        self.loadText = sprite("Sprites/Menu/loadGameHoverText2.png", 580, 655, "LoadGameHoverText")
 
-        self.backButton = sprite("Menu/back.png", 20, 850, "backButton")
+        self.backButton = sprite("Sprites/Menu/back.png", 20, 850, "backButton")
 
-        self.info = sprite("Menu/InfoText.png", 25, 200, "InfoText")
+        self.info = sprite("Sprites/Menu/InfoText.png", 25, 200, "InfoText")
 
         self.playText.hide()
         self.infoText.hide()
@@ -43,26 +43,26 @@ class Menu():
         if ms.hoverSprite(self.playButton):
             if self.hoverable == True:
                 self.playText.show()
-            self.playButton.modifyImage("Menu/playButtonLarge.png")
+            self.playButton.modifyImage("Sprites/Menu/playButtonLarge.png")
         else:
             self.playText.hide()
-            self.playButton.modifyImage("Menu/playButton.png")
+            self.playButton.modifyImage("Sprites/Menu/playButton.png")
         
         if ms.hoverSprite(self.infoIcon):
             if self.hoverable == True:
                 self.infoText.show()
-            self.infoIcon.modifyImage("Menu/infoIcon2Large.png")
+            self.infoIcon.modifyImage("Sprites/Menu/infoIcon2Large.png")
         else:
             self.infoText.hide()
-            self.infoIcon.modifyImage("Menu/infoIcon2.png")
+            self.infoIcon.modifyImage("Sprites/Menu/infoIcon2.png")
 
         if ms.hoverSprite(self.loadIcon):
             if self.hoverable == True:
                 self.loadText.show()
-            self.loadIcon.modifyImage("Menu/loadGameLarge.png")
+            self.loadIcon.modifyImage("Sprites/Menu/loadGameLarge.png")
         else:
             self.loadText.hide()
-            self.loadIcon.modifyImage("Menu/loadGame.png")
+            self.loadIcon.modifyImage("Sprites/Menu/loadGame.png")
 
     def removeWidgets(self):
         for item in self.menuWidgets:
@@ -93,9 +93,9 @@ class Menu():
 
     def detectBackArrow(self):
         if ms.hoverSprite(self.backButton):
-            self.backButton.modifyImage("Menu/backLarge.png")
+            self.backButton.modifyImage("Sprites/Menu/backLarge.png")
         else:
-            self.backButton.modifyImage("Menu/back.png")
+            self.backButton.modifyImage("Sprites/Menu/back.png")
         if ms.hoverSprite(self.backButton) and ms.spriteClicked(self.backButton):
             self.info.hide()
             self.backButton.hide()
