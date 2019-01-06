@@ -106,10 +106,17 @@ class text():
             gameDisplay.blit(self.textSurface, (self.x, self.y))
 
     def changeSize(self, size):
+        self.size = size
         self.textFont = pygame.font.Font("freesansbold.ttf", size)
 
     def changeText(self, stringInput, colorInput):
+        self.textString = stringInput
+        self.color = colorInput
         self.textSurface = self.textFont.render(stringInput, True, colorInput)
+
+    def changeFont(self, font):
+        self.textFont = pygame.font.Font(font, self.size)
+        self.textSurface = self.textFont.render(self.textString, True, self.color)
 
     def destroy(self):
         texts.remove(self)

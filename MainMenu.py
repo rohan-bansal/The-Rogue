@@ -29,15 +29,37 @@ class Menu():
 
         self.backButton = sprite("Sprites/Menu/back.png", 20, 850, "backButton")
 
-        self.info = sprite("Sprites/Menu/InfoText.png", 25, 200, "InfoText")
+        self.infoTitle = text("How> To> Play>", 80, gray, 25, 50)
+        self.infoTitle.changeFont("Fonts/Barbarian.ttf")
+
+        self.info_1 = text("Use arrow keys or WASD to move.", 15, (165, 152, 13), 20, 200)
+        self.info_2 = text('Press "E" to pick up items.', 15, (165, 152, 13), 20, 240)
+        self.info_3 = text('Press "Q" to drop items.', 15, (165, 152, 13), 20, 280)
+        self.info_4 = text('Press "U" to use items.', 15, (165, 152, 13), 20, 320)
+        self.info_5 = text('Find items, fight monsters, and progress through puzzle and PvE levels.', 15, (165, 152, 13), 20, 380)
+        self.info_6 = text('More information will be given in-game.', 15, (165, 152, 13), 20, 420)
+        self.infoList = [self.info_1, self.info_2, self.info_3, self.info_4, self.info_5, self.info_6]
+
+        for item in self.infoList:
+            item.changeFont("Fonts/Fipps-Regular.otf")
 
         self.playText.hide()
         self.infoText.hide()
+        self.infoTitle.hide()
         self.loadText.hide()
         self.backButton.hide()
-        self.info.hide()
+        
+        self.modInfos("hide")
 
         self.menuWidgets = [self.nameText, self.playButton, self.playText, self.infoIcon, self.infoText, self.loadIcon, self.loadText]
+
+    def modInfos(self, method):
+        if method == "hide":
+            for item in self.infoList:
+                item.hide()
+        if method == "show":
+            for item in self.infoList:
+                item.show()
 
     def detectHovers(self):
         if ms.hoverSprite(self.playButton):
@@ -77,8 +99,10 @@ class Menu():
         if ms.hoverSprite(self.infoIcon) and ms.spriteClicked(self.infoIcon):
             self.hoverable = False
             self.removeWidgets()
-            self.info.show()
             self.backButton.show()
+            self.infoTitle.show()
+            self.modInfos("show")
+
             return True
 
     def detectLoadClick(self):
@@ -97,7 +121,8 @@ class Menu():
         else:
             self.backButton.modifyImage("Sprites/Menu/back.png")
         if ms.hoverSprite(self.backButton) and ms.spriteClicked(self.backButton):
-            self.info.hide()
+            self.infoTitle.hide()
+            self.modInfos("hide")
             self.backButton.hide()
             self.render()
             self.hoverable = True  
