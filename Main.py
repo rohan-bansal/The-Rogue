@@ -85,7 +85,7 @@ def spawnHero():
             if heroChar.storage[x + 1].name == "Sword":
                 exists = True
     if exists == False:
-        Sword = Weapon.Weapon("Sword", "Sprites/BlueHairedHero/sword.png", "Primary Weapon", 260, 905)
+        Sword = Weapon.Weapon("Small Sword", 260, 905, "Sprites/BlueHairedHero/sword.png", "Weapon")
         Sword.assignInvSlot(1)
         heroChar.addDimensions(Sword.spriteImage.width, Sword.spriteImage.height, heroChar.availableSlot)
         heroChar.addToInventory(Sword)

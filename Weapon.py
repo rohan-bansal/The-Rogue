@@ -1,14 +1,26 @@
 import AppEngine
 from AppEngine import *
 
+import JsonParser
+import Spritesheet
+
+
 class Weapon():
-    def __init__(self, name, image, desc, x, y):
-        self.name = name
-        self.image = image
-        self.desc = desc
+    def __init__(self, name, x, y, standalone = None, standaloneDesc = None):
+
+        if standalone != None and standaloneDesc != None:
+            self.image = standalone
+            self.desc = standaloneDesc
+        else:
+            parser = JsonParser.Parser()
+            parser.parse("GameConfig/ItemDatabase.json")
+            ss = Spritesheet.spritesheet("Sprites/Spritesheets/pixelArt.png")
+
+            self.image = ss.image_at(tuple(parser.settings[name]["coords"]), (0, 0, 0, 0))
+            self.desc = parser.settings[name]["desc"]
 
         self.weapon = True
-
+        self.name = name
         self.pickedUp = False
 
         self.spriteImage = sprite(self.image, x, y, self.name)
@@ -16,7 +28,7 @@ class Weapon():
 
         self.invSlot = ""
 
-    def assignInvSlot(self,slot):
+    def assignInvSlot(self, slot):
         self.invSlot = slot
 
     def use(self):

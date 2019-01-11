@@ -37,7 +37,7 @@ class StageOne():
         self.items.append(co.Consumable("Cherry Juice", 600, 700))
         self.items.append(co.Consumable("Blackberry", 500, 700))
         self.items.append(co.Consumable("Cherry", 400, 700))
-        self.items.append(co.Consumable("Red Apple", 300, 700))
+        self.items.append(co.Consumable("Gray Potion", 300, 700))
 
         return self.items
 
