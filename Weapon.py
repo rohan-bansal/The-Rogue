@@ -14,9 +14,6 @@ class Weapon():
         self.spriteImage = sprite(self.image, x, y, self.name)
         self.spriteImage.description = self.desc
 
-        self.width = self.spriteImage.width
-        self.height = self.spriteImage.height
-
         self.invSlot = ""
 
     def assignInvSlot(self,slot):

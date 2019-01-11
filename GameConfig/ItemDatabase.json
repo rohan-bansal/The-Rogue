@@ -1,0 +1,24 @@
+{
+    "Cherry Juice" : 
+    {
+        "coords" : [238, 102, 32, 32],
+        "desc" : "Juice made of cherries."
+    },
+    "Blackberry" : 
+    {
+        "coords" : [0, 0, 32, 32],
+        "desc" : "A berry picked from a bush nearby."
+    },
+    "Green Apple" : {
+        "coords" : [70, 0, 32, 32],
+        "desc" : "A fruit picked from a tree nearby."
+    },
+    "Cherry" : {
+        "coords" : [35, 0, 32, 32],
+        "desc" : "A berry picked from a bush nearby."
+    },
+    "Red Apple" : {
+        "coords" : [105, 0, 32, 32],
+        "desc" : "A fruit picked from a tree nearby."
+    }
+}
