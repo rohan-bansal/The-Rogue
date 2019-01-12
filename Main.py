@@ -1,7 +1,7 @@
 import AppEngine
 from AppEngine import *
 
-import LevelOne
+import LevelOne, LevelTwo
 import JsonParser
 import MainMenu
 import Character
@@ -15,8 +15,14 @@ set_window("Roguelike Adventure", 960, 960) # { 15, 14 (*64) [960, 896] }
 pygame.display.set_icon(pygame.image.load("icon.png"))
 
 levelIndex = {
-    1 : LevelOne.StageOne()
-#   2 : LevelTwo.StageTwo()
+    1 : LevelOne.StageOne(),
+    2 : LevelTwo.StageTwo()
+} 
+
+
+rooms = {
+    1 : [2, "east"],
+    2 : [3, "north"]  
 }
 
 ss = Spritesheet.spritesheet("Sprites/BlueHairedHero/blue_haired.png")
@@ -57,13 +63,16 @@ nextAvailableSlot = 320
 def start():
     global menuActive, itemList, obstCoords
     menuActive = False
-    inventorySlots.clear()
-    for x in range(4, 11):
-        inventorySlots.append(sprite("Sprites/Inventory/inventory_slot.png", x * 64, 903, "slot" + str(x)))
+    if 'heroChar' in globals() or 'heroChar' in locals():
+        pass
+    else:
+        inventorySlots.clear()
+        for x in range(4, 11):
+            inventorySlots.append(sprite("Sprites/Inventory/inventory_slot.png", x * 64, 903, "slot" + str(x)))
 
     levelIndex[currentLevel].generateGround()
     levelIndex[currentLevel].generateObstacles()
-    itemList = levelIndex[currentLevel].spawnTreasure()
+    itemList = itemList + levelIndex[currentLevel].spawnTreasure()
     if musicActive == True:
         levelIndex[currentLevel].startMusic()
     spawnHero()
@@ -72,31 +81,21 @@ def start():
 def spawnHero():
     global hero, heroChar, heroBox, heroSpawned, inventorySpawned
 
-    hero = sprite(charWalkCycleRight[0], 128, 453, "hero")
+    hero = sprite(charWalkCycleRight[0], 700, 453, "hero")
     hero.setHP(100)
     heroSpawned = True
     inventorySpawned = True
 
-    exists = False
-
-    heroChar = Character.Character()
-    for x in range(len(heroChar.storage)):
-        if heroChar.storage[x + 1] != "":
-            if heroChar.storage[x + 1].name == "Sword":
-                exists = True
-    if exists == False:
-        Sword = Weapon.Weapon("Small Sword", 260, 905, "Sprites/BlueHairedHero/sword.png", "Weapon")
+    if 'heroChar' in globals() or 'heroChar' in locals():
+        pass
+    else:
+        heroChar = Character.Character()
+        Sword = Weapon.Weapon("Sword", 260, 905, "Sprites/BlueHairedHero/sword.png", "Weapon")
         Sword.assignInvSlot(1)
         heroChar.addDimensions(Sword.spriteImage.width, Sword.spriteImage.height, heroChar.availableSlot)
         heroChar.addToInventory(Sword)
         Sword.pickedUp = True
         itemList.append(Sword)
-
-
-def removeLevel(hero):
-    global heroSpawned
-    heroSpawned = False
-    del(hero)
 
 
 menu = MainMenu.Menu()
@@ -146,6 +145,7 @@ while(True):
             hoverText.y = item.spriteImage.y - 30
 
         if hero.collide(item.spriteImage) and kb.activeKeys[K_e]:
+            print(heroChar.findTotalFilled())
             if heroChar.findTotalFilled() == 7:
                 pass
             else:
@@ -230,7 +230,6 @@ while(True):
             if cannotWalkHere != currentDirection:
                 hero.x += 4
 
-
         for item in levelIndex[currentLevel].obstacleTiles:
             if item.sprite.collide(hero):
                 if hero.HP != 0:
@@ -242,8 +241,17 @@ while(True):
                     HPgreen -= 5.1
                     HPgreen = round(HPgreen)
 
+        if rooms[currentLevel][1] == "east":
+            if hero.x + 30 >= 958:
+                hero.destroy()
+                hero = None
+                levelIndex[currentLevel].destroy()
+                currentLevel = rooms[currentLevel][0]
+                start()
+
     if heroSpawned == True:
         temp = levelIndex[currentLevel].checkCollision(hero)
         cannotWalkHere = temp
+
 
     gameLoop(black)

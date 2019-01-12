@@ -51,6 +51,10 @@
     },
     "Small Sword" : {
         "coords" : [35, 170, 32, 32],
-        "desc" : "The most basic sword."
+        "desc" : "A basic sword."
+    },
+    "Book" : {
+        "coords" : [0, 987, 32, 32],
+        "desc" : "A book, full of mysteries."
     }
 }

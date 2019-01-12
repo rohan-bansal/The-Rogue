@@ -1,7 +1,7 @@
 import AppEngine
 from AppEngine import *
 
-class Character(pygame.sprite.Sprite):
+class Character():
     def __init__(self):
         self.storage = {
             1 : "",
@@ -44,7 +44,8 @@ class Character(pygame.sprite.Sprite):
         self.itemDimensions.update({index : str(width) + " " + str(height)})
 
     def findTotalFilled(self):
-        for key in self.storage.keys():
-            if self.storage[key] != "":
+        self.totalFilled = 0
+        for x in range(len(self.storage)):
+            if self.storage[x + 1] != "":
                 self.totalFilled += 1
         return self.totalFilled

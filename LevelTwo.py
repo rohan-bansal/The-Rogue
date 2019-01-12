@@ -8,32 +8,24 @@ import Spritesheet
 import random
 
 
-class StageOne():
+class StageTwo():
     def __init__(self):
         self.groundTiles = []
         self.obstacleTiles = []
         self.hazards = []
 
-        self.lvl1 = LevelParser.Parser("Level One")
-        self.lvl1.parse()
+        self.lvl2 = LevelParser.Parser("Level Two")
+        self.lvl2.parse()
 
         self.items = []
 
     def generateGround(self):
-        self.lvl1.generate_ground(self.groundTiles)
+        self.lvl2.generate_ground(self.groundTiles)
 
     def generateObstacles(self):
-        self.lvl1.generate_obstacles(self.obstacleTiles)
+        self.lvl2.generate_obstacles(self.obstacleTiles)
 
     def destroy(self):
-        for i in self.obstacleTiles:
-            i.sprite.destroy()
-        #for c in self.hazards:
-        #    c.sprite.destroy()
-        for f in self.groundTiles:
-            f.destroy()
-        #for q in self.items:
-        #    q.spriteImage.destroy()
         self.obstacleTiles.clear()
         self.hazards.clear()
         self.groundTiles.clear()
@@ -41,10 +33,10 @@ class StageOne():
         self.stopMusic()
 
     def spawnTreasure(self):
-        self.items.append(co.Consumable("Cherry Juice", 600, 700))
-        self.items.append(co.Consumable("Blackberry", 500, 700))
-        self.items.append(co.Consumable("Book", 400, 700))
-        self.items.append(co.Consumable("Blue Potion", 300, 700))
+        self.items.append(co.Consumable("Yellow Potion", 600, 700))
+        self.items.append(co.Consumable("Small Sword", 500, 700))
+        self.items.append(co.Consumable("Red Apple", 400, 700))
+        self.items.append(co.Consumable("Orange Potion", 300, 700))
 
         return self.items
 

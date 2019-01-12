@@ -206,6 +206,7 @@ class sprite():
                 return False
 
     def destroy(self):
+        self.HPtext.destroy()
         sprites.remove(self)
         del(self)
 
