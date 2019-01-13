@@ -31,6 +31,10 @@ class Weapon():
     def assignInvSlot(self, slot):
         self.invSlot = slot
 
+    def destroy(self):
+        self.spriteImage.destroy()
+        del(self)
+
     def use(self):
         pass
 

@@ -8,29 +8,24 @@ import Spritesheet
 import random
 
 
-class StageTwo():
+class StageThree():
     def __init__(self):
         self.groundTiles = []
         self.obstacleTiles = []
         self.hazards = []
 
-        self.lvl2 = LevelParser.Parser("Level Two")
-        self.lvl2.parse()
+        self.lvl3 = LevelParser.Parser("Level Three")
+        self.lvl3.parse()
 
-        self.itemInfo = [
-            ["Yellow Potion", 600, 700],
-            ["Small Sword", 500, 700],
-            ["Red Apple", 400, 700],
-            ["Orange Potion", 300, 700]
-        ]
+        self.itemInfo = []
 
         self.items = []
 
     def generateGround(self):
-        self.lvl2.generate_ground(self.groundTiles)
+        self.lvl3.generate_ground(self.groundTiles)
 
     def generateObstacles(self):
-        self.lvl2.generate_obstacles(self.obstacleTiles)
+        self.lvl3.generate_obstacles(self.obstacleTiles)
 
     def destroy(self):
         for i in self.obstacleTiles:
@@ -42,6 +37,7 @@ class StageTwo():
         self.obstacleTiles.clear()
         self.hazards.clear()
         self.groundTiles.clear()
+        self.items.clear()
         self.stopMusic()
 
     def spawnTreasure(self):

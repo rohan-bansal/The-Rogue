@@ -173,6 +173,10 @@ class sprite():
     def show(self):
         self.visible = True 
 
+    def moveToFront(self):
+        sprites.remove(self)
+        sprites.append(self)
+
     def update(self):
         self.edgeLeft = self.x
         self.edgeRight = self.x + self.width
@@ -207,6 +211,8 @@ class sprite():
 
     def destroy(self):
         self.HPtext.destroy()
+        self.main = None
+        self.rect = None
         sprites.remove(self)
         del(self)
 

@@ -25,12 +25,16 @@ class Parser():
             self.lines = f.read().splitlines()
 
         self.lines = self.lines[self.lines.index("// %s" % self.level):]
-
-        for line in self.lines:
-            if line == "":
-                self.lines = self.lines[:self.lines.index(line)]
-
         self.lines.pop(0)
+
+        done = False
+        for line in self.lines:
+            if line == '':
+                if done == False:
+                    self.lines = self.lines[:self.lines.index(line)]
+                    done = True
+
+
         self.hasParsed = True
 
     def checkForParse(self):

@@ -17,6 +17,13 @@ class StageOne():
         self.lvl1 = LevelParser.Parser("Level One")
         self.lvl1.parse()
 
+        self.itemInfo = [
+            ["Cherry Juice", 600, 700],
+            ["Blackberry", 500, 700],
+            ["Book", 400, 700],
+            ["Blue Potion", 300, 700]
+        ]
+
         self.items = []
 
     def generateGround(self):
@@ -32,19 +39,26 @@ class StageOne():
         #    c.sprite.destroy()
         for f in self.groundTiles:
             f.destroy()
-        #for q in self.items:
-        #    q.spriteImage.destroy()
         self.obstacleTiles.clear()
         self.hazards.clear()
         self.groundTiles.clear()
-        self.items.clear()
         self.stopMusic()
 
     def spawnTreasure(self):
-        self.items.append(co.Consumable("Cherry Juice", 600, 700))
-        self.items.append(co.Consumable("Blackberry", 500, 700))
-        self.items.append(co.Consumable("Book", 400, 700))
-        self.items.append(co.Consumable("Blue Potion", 300, 700))
+        if len(self.items) > 0:
+            temp = []
+            for item in self.items:
+                if item.spriteImage.y != 905:
+                    item.spriteImage.destroy()
+                    item.spriteImage = None
+                    del item
+                else:
+                    temp.append(item)
+            self.items = temp
+                    
+        else:
+            for x in range(len(self.itemInfo)):
+                self.items.append(co.Consumable(self.itemInfo[x][0], self.itemInfo[x][1], self.itemInfo[x][2]))
 
         return self.items
 

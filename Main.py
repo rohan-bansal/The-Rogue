@@ -1,7 +1,7 @@
 import AppEngine
 from AppEngine import *
 
-import LevelOne, LevelTwo
+import LevelOne, LevelTwo, LevelThree
 import JsonParser
 import MainMenu
 import Character
@@ -16,13 +16,35 @@ pygame.display.set_icon(pygame.image.load("icon.png"))
 
 levelIndex = {
     1 : LevelOne.StageOne(),
-    2 : LevelTwo.StageTwo()
+    2 : LevelTwo.StageTwo(),
+    3 : LevelThree.StageThree()
 } 
-
 
 rooms = {
     1 : [2, "east"],
-    2 : [3, "north"]  
+    2 : [3, "north"],
+    3 : [4, "west"],
+}
+
+roomBorders = {
+    "east" : "hero.x + hero.width >= 960",
+    "north" : "hero.y <= 1",
+    "west" : "hero.x <= 1",
+    "south" : "hero.y + hero.width >= 847"
+}
+
+oppDir = {
+    "east" : "west",
+    "west" : "east",
+    "south" : "north",
+    "north" : "south"
+}
+
+startPositions = {
+    "east" : (20, 440),
+    "north" : (440, 840),
+    "west" : (930, 440),
+    "south" : (440, 80)
 }
 
 ss = Spritesheet.spritesheet("Sprites/BlueHairedHero/blue_haired.png")
@@ -32,7 +54,9 @@ parser = JsonParser.Parser()
 parser.parse("GameConfig/config.json")
 musicActive = parser.settings['musicSettings']['music']
 sfxActive = parser.settings['musicSettings']['SFX']
+
 currentLevel = parser.settings['levelSettings']['starting_level']
+previousLevel = 0
 
 parser.parse("Sprites/BlueHairedHero/walkCycle.json")
 
@@ -60,7 +84,7 @@ currentSelected = 0
 nextAvailableSlot = 320
 
 
-def start():
+def start(heroCoords = None):
     global menuActive, itemList, obstCoords
     menuActive = False
     if 'heroChar' in globals() or 'heroChar' in locals():
@@ -75,13 +99,19 @@ def start():
     itemList = itemList + levelIndex[currentLevel].spawnTreasure()
     if musicActive == True:
         levelIndex[currentLevel].startMusic()
-    spawnHero()
+    if heroCoords != None:
+        spawnHero(heroCoords)    
+    else:        
+        spawnHero()
 
 
-def spawnHero():
+def spawnHero(heroCoords = None):
     global hero, heroChar, heroBox, heroSpawned, inventorySpawned
 
-    hero = sprite(charWalkCycleRight[0], 700, 453, "hero")
+    if heroCoords != None:
+        hero = sprite(charWalkCycleRight[0], heroCoords[0], heroCoords[1], "hero")
+    else:
+        hero = sprite(charWalkCycleRight[0], 700, 453, "hero")
     hero.setHP(100)
     heroSpawned = True
     inventorySpawned = True
@@ -145,7 +175,6 @@ while(True):
             hoverText.y = item.spriteImage.y - 30
 
         if hero.collide(item.spriteImage) and kb.activeKeys[K_e]:
-            print(heroChar.findTotalFilled())
             if heroChar.findTotalFilled() == 7:
                 pass
             else:
@@ -172,11 +201,12 @@ while(True):
             pass
         else:
             nextAvailableSlot = inventorySlots[currentSelected].x
-        
+
         if sfxActive == True:
             au.playSound("Music/Drop.ogg")
         hoverText.changeText("", black)
         itemSprite = heroChar.storage[currentSelected + 1].spriteImage
+        itemSprite.moveToFront()
         dimen = heroChar.itemDimensions[currentSelected + 1].split(" ")
         itemSprite.main = pygame.transform.scale(itemSprite.main, ( int(dimen[0]) , int(dimen[1]) ))
         itemSprite.x = hero.x
@@ -234,6 +264,7 @@ while(True):
             if item.sprite.collide(hero):
                 if hero.HP != 0:
                     hero.HP -= 1
+                    
                 if HPred != 255:
                     HPred += 5.1
                     HPred = round(HPred)
@@ -241,13 +272,29 @@ while(True):
                     HPgreen -= 5.1
                     HPgreen = round(HPgreen)
 
-        if rooms[currentLevel][1] == "east":
-            if hero.x + 30 >= 958:
-                hero.destroy()
-                hero = None
-                levelIndex[currentLevel].destroy()
-                currentLevel = rooms[currentLevel][0]
-                start()
+
+        if eval(roomBorders[rooms[currentLevel][1]]):
+            previousLevel = currentLevel
+            temp = startPositions[rooms[currentLevel][1]]
+            hero.destroy()
+            hero = None
+            levelIndex[currentLevel].destroy()
+            currentLevel = rooms[currentLevel][0]
+            start(temp)
+        elif hero.x <= 1:
+            previousLevel = 2
+            temp = (930, 440)
+            tempR = []
+            for x in range(len(itemList)):
+                if itemList[x].spriteImage.y == 905:
+                    tempR.append(itemList[x])
+            itemList = tempR
+            hero.destroy()
+            hero = None
+            levelIndex[currentLevel].destroy()
+            currentLevel = 1
+            start(temp)
+
 
     if heroSpawned == True:
         temp = levelIndex[currentLevel].checkCollision(hero)
