@@ -8,7 +8,7 @@ __*50% complete*__
 
 ## Download
 
-1. Clone the repository, download the ZIP, or download the latest release (releases page).
+1. Clone the repository, download the ZIP, or download the latest release [here](https://github.com/Rohan-Bansal/TheRogue_RPG-Adventure/releases).
 2. Necessary libraries/dependencies: `pygame` (requires python3)
 
 ## Configure
