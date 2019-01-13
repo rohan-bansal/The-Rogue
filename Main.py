@@ -1,7 +1,10 @@
 import AppEngine
 from AppEngine import *
 
-import LevelOne, LevelTwo, LevelThree
+import Levels.LevelOne as LevelOne
+import Levels.LevelTwo as LevelTwo
+import Levels.LevelThree as LevelThree
+
 import JsonParser
 import MainMenu
 import Character
@@ -21,16 +24,16 @@ levelIndex = {
 } 
 
 rooms = {
-    1 : [2, "east"],
-    2 : [3, "north"],
-    3 : [4, "west"],
+    1 : [2, "east"], # from room 1, go to room 2 via direction east.
+    2 : [3, "north", 1, "west"], # from room 2, go to room 3 via direction north. Go back to room 1 via direction west.
+    3 : [4, "west", 2, "south"],
 }
 
 roomBorders = {
     "east" : "hero.x + hero.width >= 960",
     "north" : "hero.y <= 1",
     "west" : "hero.x <= 1",
-    "south" : "hero.y + hero.width >= 847"
+    "south" : "hero.y + hero.height >= 895"
 }
 
 oppDir = {
@@ -42,23 +45,26 @@ oppDir = {
 
 startPositions = {
     "east" : (20, 440),
-    "north" : (440, 840),
+    "north" : (440, 800),
     "west" : (930, 440),
     "south" : (440, 80)
 }
 
-ss = Spritesheet.spritesheet("Sprites/BlueHairedHero/blue_haired.png")
-alpha = (0, 0, 0, 0)
 
 parser = JsonParser.Parser()
 parser.parse("GameConfig/config.json")
 musicActive = parser.settings['musicSettings']['music']
 sfxActive = parser.settings['musicSettings']['SFX']
+character = parser.settings['levelSettings']['player']
 
 currentLevel = parser.settings['levelSettings']['starting_level']
 previousLevel = 0
+toExit = None
 
-parser.parse("Sprites/BlueHairedHero/walkCycle.json")
+ss = Spritesheet.spritesheet("Sprites/" + character + "/character.png")
+alpha = (0, 0, 0, 0)
+
+parser.parse("Sprites/" + character + "/walkCycle.json")
 
 charWalkCycleDown = parser.settings['Down']
 charWalkCycleUp = parser.settings['Up']
@@ -109,7 +115,9 @@ def spawnHero(heroCoords = None):
     global hero, heroChar, heroBox, heroSpawned, inventorySpawned
 
     if heroCoords != None:
-        hero = sprite(charWalkCycleRight[0], heroCoords[0], heroCoords[1], "hero")
+        hero.moveToFront()
+        hero.x = heroCoords[0]
+        hero.y = heroCoords[1]
     else:
         hero = sprite(charWalkCycleRight[0], 700, 453, "hero")
     hero.setHP(100)
@@ -194,6 +202,8 @@ while(True):
                             heroChar.availableSlot = x + 1
                             nextAvailableSlot = inventorySlots[x].x
                             done = True
+        
+        #print(heroChar.storage)
 
 
     if kb.activeKeys[K_q] and heroChar.storage[currentSelected + 1] != "":
@@ -275,25 +285,25 @@ while(True):
 
         if eval(roomBorders[rooms[currentLevel][1]]):
             previousLevel = currentLevel
-            temp = startPositions[rooms[currentLevel][1]]
-            hero.destroy()
-            hero = None
+            toExit = oppDir[rooms[currentLevel][1]]
             levelIndex[currentLevel].destroy()
             currentLevel = rooms[currentLevel][0]
-            start(temp)
-        elif hero.x <= 1:
-            previousLevel = 2
-            temp = (930, 440)
-            tempR = []
-            for x in range(len(itemList)):
-                if itemList[x].spriteImage.y == 905:
-                    tempR.append(itemList[x])
-            itemList = tempR
-            hero.destroy()
-            hero = None
-            levelIndex[currentLevel].destroy()
-            currentLevel = 1
-            start(temp)
+            start(startPositions[rooms[previousLevel][1]])
+        elif currentLevel != 1:
+            if toExit != None:
+                if eval(roomBorders[toExit]):
+                    previousLevel = currentLevel
+                    toExit = oppDir[toExit]
+                    levelIndex[currentLevel].destroy()
+                    currentLevel = rooms[currentLevel][2]
+                    start(startPositions[rooms[previousLevel][3]])
+                elif eval(roomBorders[rooms[currentLevel][3]]):
+                    previousLevel = currentLevel
+                    toExit = oppDir[rooms[currentLevel][3]]
+                    levelIndex[currentLevel].destroy()
+                    currentLevel = rooms[currentLevel][2]
+                    start(startPositions[rooms[previousLevel][3]])
+
 
 
     if heroSpawned == True:

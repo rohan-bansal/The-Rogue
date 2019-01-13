@@ -5,7 +5,8 @@
   },
   "levelSettings" : 
   {
-    "starting_level" : 1
+    "starting_level" : 1,
+    "player" : "BlueHairedHero"
   },
   "musicSettings" : 
   {

@@ -1,6 +1,9 @@
 import AppEngine
 from AppEngine import *
 
+import sys
+print("I/O directory set to", sys.path[0])
+
 import Consumable as co
 import LevelParser
 import Spritesheet
