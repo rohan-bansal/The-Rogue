@@ -1,0 +1,11 @@
+{
+    "2" : 
+    {
+        "9, 6" : ["Welcome to the realm of Crusilon, adventurer."],
+        "6, 10" : ["Press 'E' and 'Q' to pick up and drop objects."]
+    },
+    "3" : 
+    {
+        "7, 10": ["Try to find the hidden object in the grove of trees."]
+    }
+}

@@ -36,9 +36,10 @@ class Menu():
         self.info_2 = text('Press "E" to pick up items.', 15, (165, 152, 13), 20, 240)
         self.info_3 = text('Press "Q" to drop items.', 15, (165, 152, 13), 20, 280)
         self.info_4 = text('Press "U" to use items.', 15, (165, 152, 13), 20, 320)
-        self.info_5 = text('Find items, fight monsters, and progress through puzzle and PvE levels.', 15, (165, 152, 13), 20, 380)
-        self.info_6 = text('More information will be given in-game.', 15, (165, 152, 13), 20, 420)
-        self.infoList = [self.info_1, self.info_2, self.info_3, self.info_4, self.info_5, self.info_6]
+        self.info_7 = text('Press SPACE to read signs, and ENTER to close them.', 15, (165, 152, 13), 20, 360)
+        self.info_5 = text('Find items, fight monsters, and progress through puzzle and PvE levels.', 15, (165, 152, 13), 20, 410)
+        self.info_6 = text('More information will be given in-game.', 15, (165, 152, 13), 20, 450)
+        self.infoList = [self.info_1, self.info_2, self.info_3, self.info_4, self.info_5, self.info_6, self.info_7]
 
         for item in self.infoList:
             item.changeFont("Fonts/Fipps-Regular.otf")

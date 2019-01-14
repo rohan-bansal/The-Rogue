@@ -21,10 +21,10 @@ class StageTwo():
         self.lvl2.parse()
 
         self.itemInfo = [
-            ["Yellow Potion", 600, 700, "co"],
-            ["Small Sword", 500, 700, "wn"],
-            ["Red Apple", 400, 700, "co"],
-            ["Orange Potion", 300, 700, "co"]
+            #["Yellow Potion", 600, 700, "co"],
+            #["Small Sword", 500, 700, "wn"],
+            #["Red Apple", 400, 700, "co"],
+            #["Orange Potion", 300, 700, "co"]
         ]
 
         self.items = []

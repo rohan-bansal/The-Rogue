@@ -59,7 +59,7 @@ class Parser():
             for x in range(len(temp)):
                 if temp[x] != " ":
                     if temp[x] == "*":
-                        obstTileList.append(so.StationaryObstacle(sprite(self.obstDict[temp[x]], x * 64 + 16, y * 64 + 16, "sign %s, %s" % (x, y))))
+                        obstTileList.append(so.StationaryObstacle(sprite(self.obstDict[temp[x]], x * 64 + 16, y * 64 + 16, "sign %s %s" % (x, y))))
                         print(x)
                         print(y)
                     else:

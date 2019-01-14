@@ -59,8 +59,8 @@ parser.parse("GameConfig/config.json")
 musicActive = parser.settings['musicSettings']['music']
 sfxActive = parser.settings['musicSettings']['SFX']
 character = parser.settings['levelSettings']['player']
-
 currentLevel = parser.settings['levelSettings']['starting_level']
+
 previousLevel = 0
 toExit = None
 
@@ -78,6 +78,9 @@ cycles = [charWalkCycleDown, charWalkCycleLeft, charWalkCycleRight, charWalkCycl
 for element in cycles:
     for r in range(len(element)):
         element[r] = ss.image_at(tuple(element[r]), alpha)
+
+parser.parse("GameConfig/signText.json")
+signDisplay = parser.settings
 
 menuActive = True
 heroSpawned = False
@@ -145,6 +148,9 @@ if musicActive == True:
     menu.startMusic()
 
 hoverText = text("", 13, black, 0, 0)
+signText = text("", 15, black, 0, 0)
+signText.changeFont("Fonts/seagram.ttf")
+textActive = False
 
 optionClicked = False
 
@@ -249,7 +255,7 @@ while(True):
                 inventorySlots[s].modifyImage("Sprites/Inventory/inventory_slot.png")
 
     if heroSpawned == True:
-        hero.drawHealthText(hero.x - 3, hero.y - 24, 20, (HPred, HPgreen, 0), str(hero.HP))
+        hero.drawHealthText(hero.x - 3, hero.y - 20, 20, (HPred, HPgreen, 0), str(hero.HP))
         if (kb.activeKeys[K_w] or kb.activeKeys[K_UP]) and hero.edgeTop > 0:
             currentDirection = "north"
             hero.modifyImage(charWalkCycleUp[walkFrame])            
@@ -283,7 +289,25 @@ while(True):
                     elif HPgreen != 0:
                         HPgreen -= 5.1
                         HPgreen = round(HPgreen)
+            
+            tempItem = item.sprite.id_.split(" ")
+            if tempItem[0] == "sign":
+                if hero.x + hero.width + 32 >= item.sprite.x and hero.y + hero.height + 32 >= item.sprite.y \
+                and hero.x - 32 <= item.sprite.x + item.sprite.width and hero.y - 32<= item.sprite.y + item.sprite.height \
+                and kb.activeKeys[K_SPACE]:
+                    signText.changeText(signDisplay[str(currentLevel)][tempItem[1] + ", " + tempItem[2]][0], black)
+                    textWidth = signText.textSurface.get_rect().width
+                    signWidth = item.sprite.width
+                    x_Offset = (textWidth - signWidth) / 2
+                    signText.x = item.sprite.x - x_Offset
+                    signText.y = item.sprite.y - 20
+                    textActive = True
 
+            if kb.activeKeys[K_RETURN] and textActive == True:
+                textActive = False
+                signText.changeText("", black)
+                signText.x = 0
+                signText.y = 0
 
         if eval(roomBorders[rooms[currentLevel][1]]):
             previousLevel = currentLevel

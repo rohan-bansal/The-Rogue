@@ -86,7 +86,6 @@ class text():
 
         self.textFont = pygame.font.Font("freesansbold.ttf", sizeInput)
         self.textSurface = self.textFont.render(string, True, colorInput)
-
         self.textString = string
         self.size = sizeInput
         self.color = colorInput
