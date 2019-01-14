@@ -2,14 +2,17 @@
 // All the level designs are created here. The code and puzzles are in the individual python files.
 // # - rocks
 // @ - dead vines
-// & - next level/room door
+// ^ - next level/room door
 // ! - movable object
+// * - sign
+// $ - tree
+// & - tree grove
 // [empty] - ground
 
 // Level One
 ###############
 #             #
-#             #
+#  $ $ $ $ $  #
 #             #
 #             #
 #             
@@ -17,7 +20,7 @@
 #             
 #             
 #             #
-#             #
+#    &   &    #
 #             #
 #             #
 ###############
@@ -27,11 +30,11 @@
 #             #
 #             #
 #             #
-#             #
-              #
-              #
-              #
-              #
+#        $$   #
+         &$   #
+         *$   #
+         &$   #
+         $$   #
 #             #
 #             #
 #             #
@@ -43,13 +46,29 @@
 #             #
 #             #
 #             #
-#             #
-              #
-              #
-              #
-              #
-#             #
-#             #
-#             #
+#  $$$$$$$$$  #
+   $$$$$$$$$  #
+   $$$$$$$$$  #
+   $$$$$$$$$  #
+   $$$$$$$$$  #
+#  $$$$$$$$$  #
+#  $  &*&  $  #
+#  $$$   $$$  #
 #             #
 #####     #####
+
+// Level Four
+#####     #####
+#             #
+#             #
+#             #
+#             #
+#              
+#              
+#              
+#              
+#             #
+#             #
+#             #
+#             #
+###############

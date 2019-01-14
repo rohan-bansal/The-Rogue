@@ -1,7 +1,10 @@
 import AppEngine
 from AppEngine import *
 
-import Consumable as co
+import ObjectClasses.Consumable as co
+import ObjectClasses.Weapon as wn
+import ObjectClasses.Item as im
+
 import LevelParser
 import Spritesheet
 
@@ -26,6 +29,9 @@ class StageThree():
 
     def generateObstacles(self):
         self.lvl3.generate_obstacles(self.obstacleTiles)
+    
+    def generateHazards(self):
+        self.lvl3.generate_hazards(self.hazards)
 
     def destroy(self):
         for i in self.obstacleTiles:
@@ -54,7 +60,12 @@ class StageThree():
                     
         else:
             for x in range(len(self.itemInfo)):
-                self.items.append(co.Consumable(self.itemInfo[x][0], self.itemInfo[x][1], self.itemInfo[x][2]))
+                if self.itemInfo[x][3] == "co":
+                    self.items.append(co.Consumable(self.itemInfo[x][0], self.itemInfo[x][1], self.itemInfo[x][2]))
+                elif self.itemInfo[x][3] == "wn":
+                    self.items.append(wn.Weapon(self.itemInfo[x][0], self.itemInfo[x][1], self.itemInfo[x][2]))
+                elif self.itemInfo[x][3] == "im":
+                    self.items.append(im.Item(self.itemInfo[x][0], self.itemInfo[x][1], self.itemInfo[x][2]))
 
         return self.items
 

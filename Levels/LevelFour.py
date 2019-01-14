@@ -1,9 +1,6 @@
 import AppEngine
 from AppEngine import *
 
-import sys
-print("I/O directory set to", sys.path[0])
-
 import ObjectClasses.Consumable as co
 import ObjectClasses.Weapon as wn
 import ObjectClasses.Item as im
@@ -14,29 +11,27 @@ import Spritesheet
 import random
 
 
-class StageOne():
+class StageFour():
     def __init__(self):
         self.groundTiles = []
         self.obstacleTiles = []
         self.hazards = []
 
-        self.lvl1 = LevelParser.Parser("Level One")
-        self.lvl1.parse()
+        self.lvl4 = LevelParser.Parser("Level Four")
+        self.lvl4.parse()
 
-        self.itemInfo = [
-            ["Cherry Juice", 600, 700, "co"],
-            ["Blackberry", 500, 700, "co"],
-            ["Book", 400, 700, "im"],
-            ["Blue Potion", 300, 700, "co"]
-        ]
+        self.itemInfo = [] # items here: name, x, y
 
         self.items = []
 
     def generateGround(self):
-        self.lvl1.generate_ground(self.groundTiles)
+        self.lvl4.generate_ground(self.groundTiles)
 
     def generateObstacles(self):
-        self.lvl1.generate_obstacles(self.obstacleTiles)
+        self.lvl4.generate_obstacles(self.obstacleTiles)
+
+    def generateHazards(self):
+        self.lvl4.generate_hazards(self.hazards)
 
     def destroy(self):
         for i in self.obstacleTiles:
@@ -48,10 +43,8 @@ class StageOne():
         self.obstacleTiles.clear()
         self.hazards.clear()
         self.groundTiles.clear()
+        self.items.clear()
         self.stopMusic()
-
-    def generateHazards(self):
-        self.lvl1.generate_hazards(self.hazards)
 
     def spawnTreasure(self):
         if len(self.items) > 0:
@@ -73,8 +66,6 @@ class StageOne():
                     self.items.append(wn.Weapon(self.itemInfo[x][0], self.itemInfo[x][1], self.itemInfo[x][2]))
                 elif self.itemInfo[x][3] == "im":
                     self.items.append(im.Item(self.itemInfo[x][0], self.itemInfo[x][1], self.itemInfo[x][2]))
-                    
-
 
         return self.items
 

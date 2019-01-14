@@ -1,7 +1,10 @@
 import AppEngine
 from AppEngine import *
 
-import Consumable as co
+import ObjectClasses.Consumable as co
+import ObjectClasses.Weapon as wn
+import ObjectClasses.Item as im
+
 import LevelParser
 import Spritesheet
 
@@ -18,16 +21,19 @@ class StageTwo():
         self.lvl2.parse()
 
         self.itemInfo = [
-            ["Yellow Potion", 600, 700],
-            ["Small Sword", 500, 700],
-            ["Red Apple", 400, 700],
-            ["Orange Potion", 300, 700]
+            ["Yellow Potion", 600, 700, "co"],
+            ["Small Sword", 500, 700, "wn"],
+            ["Red Apple", 400, 700, "co"],
+            ["Orange Potion", 300, 700, "co"]
         ]
 
         self.items = []
 
     def generateGround(self):
         self.lvl2.generate_ground(self.groundTiles)
+
+    def generateHazards(self):
+        self.lvl2.generate_hazards(self.hazards)
 
     def generateObstacles(self):
         self.lvl2.generate_obstacles(self.obstacleTiles)
@@ -58,7 +64,12 @@ class StageTwo():
                     
         else:
             for x in range(len(self.itemInfo)):
-                self.items.append(co.Consumable(self.itemInfo[x][0], self.itemInfo[x][1], self.itemInfo[x][2]))
+                if self.itemInfo[x][3] == "co":
+                    self.items.append(co.Consumable(self.itemInfo[x][0], self.itemInfo[x][1], self.itemInfo[x][2]))
+                elif self.itemInfo[x][3] == "wn":
+                    self.items.append(wn.Weapon(self.itemInfo[x][0], self.itemInfo[x][1], self.itemInfo[x][2]))
+                elif self.itemInfo[x][3] == "im":
+                    self.items.append(im.Item(self.itemInfo[x][0], self.itemInfo[x][1], self.itemInfo[x][2]))
 
         return self.items
 

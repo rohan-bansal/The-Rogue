@@ -1,8 +1,8 @@
 import AppEngine
 from AppEngine import *
 
-import StationaryObject as so
-import MovableObject as mo
+import ObjectClasses.StationaryObject as so
+import ObjectClasses.MovableObject as mo
 
 import random
 
@@ -15,7 +15,10 @@ class Parser():
         self.obstDict = {
             "#" : "Sprites/Ground/rocks.png",
             "@" : "Sprites/Ground/dead_vines.png",
-            " " : ["Sprites/Ground/ground.png", "Sprites/Ground/ground2.png", "Sprites/Ground/ground3.png"]
+            " " : ["Sprites/Ground/ground.png", "Sprites/Ground/ground2.png", "Sprites/Ground/ground3.png"],
+            "$" : "Sprites/Ground/tree.png",
+            "&" : "Sprites/Ground/treeGrove.png",
+            "*" : "Sprites/Objects/sign.png"
         }
 
         self.hasParsed = False
@@ -54,9 +57,17 @@ class Parser():
         for y in range(len(self.lines)):
             temp = list(self.lines[y])
             for x in range(len(temp)):
-                if temp[x] == "#" or temp[x] == "@":
-                    obstTileList.append(so.StationaryObstacle(sprite(self.obstDict[temp[x]], x * 64, y * 64, "obst x=%s, y=%s" % (x, y))))
+                if temp[x] != " ":
+                    if temp[x] == "*":
+                        obstTileList.append(so.StationaryObstacle(sprite(self.obstDict[temp[x]], x * 64 + 16, y * 64 + 16, "sign %s, %s" % (x, y))))
+                        print(x)
+                        print(y)
+                    else:
+                        obstTileList.append(so.StationaryObstacle(sprite(self.obstDict[temp[x]], x * 64, y * 64, "obst x=%s, y=%s" % (x, y))))
     
+    def generate_hazards(self, hazrdList):
+        pass # of type DamagingObject
+
     def generate_levelComplete(self):
         self.checkForParse()
 

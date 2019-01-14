@@ -4,11 +4,12 @@ from AppEngine import *
 import Levels.LevelOne as LevelOne
 import Levels.LevelTwo as LevelTwo
 import Levels.LevelThree as LevelThree
+import Levels.LevelFour as LevelFour
 
 import JsonParser
 import MainMenu
 import Character
-import Weapon
+import ObjectClasses.Weapon as Weapon
 import Spritesheet
 
 import random, time, sys, os
@@ -20,13 +21,15 @@ pygame.display.set_icon(pygame.image.load("icon.png"))
 levelIndex = {
     1 : LevelOne.StageOne(),
     2 : LevelTwo.StageTwo(),
-    3 : LevelThree.StageThree()
+    3 : LevelThree.StageThree(),
+    4 : LevelFour.StageFour()
 } 
 
 rooms = {
     1 : [2, "east"], # from room 1, go to room 2 via direction east.
     2 : [3, "north", 1, "west"], # from room 2, go to room 3 via direction north. Go back to room 1 via direction west.
     3 : [4, "west", 2, "south"],
+    4 : [5, "north", 3, "east"]
 }
 
 roomBorders = {
@@ -102,6 +105,7 @@ def start(heroCoords = None):
 
     levelIndex[currentLevel].generateGround()
     levelIndex[currentLevel].generateObstacles()
+    levelIndex[currentLevel].generateHazards()
     itemList = itemList + levelIndex[currentLevel].spawnTreasure()
     if musicActive == True:
         levelIndex[currentLevel].startMusic()
@@ -202,9 +206,6 @@ while(True):
                             heroChar.availableSlot = x + 1
                             nextAvailableSlot = inventorySlots[x].x
                             done = True
-        
-        #print(heroChar.storage)
-
 
     if kb.activeKeys[K_q] and heroChar.storage[currentSelected + 1] != "":
         if nextAvailableSlot < inventorySlots[currentSelected].x:
@@ -271,16 +272,17 @@ while(True):
                 hero.x += 4
 
         for item in levelIndex[currentLevel].obstacleTiles:
-            if item.sprite.collide(hero):
-                if hero.HP != 0:
-                    hero.HP -= 1
-                    
-                if HPred != 255:
-                    HPred += 5.1
-                    HPred = round(HPred)
-                elif HPgreen != 0:
-                    HPgreen -= 5.1
-                    HPgreen = round(HPgreen)
+            if item.id_ == "damaging":
+                if item.sprite.collide(hero):
+                    if hero.HP != 0:
+                        hero.HP -= 1
+                        
+                    if HPred != 255:
+                        HPred += 5.1
+                        HPred = round(HPred)
+                    elif HPgreen != 0:
+                        HPgreen -= 5.1
+                        HPgreen = round(HPgreen)
 
 
         if eval(roomBorders[rooms[currentLevel][1]]):
